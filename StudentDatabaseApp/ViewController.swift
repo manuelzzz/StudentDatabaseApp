@@ -10,17 +10,34 @@ import UIKit
 class ViewController: UIViewController {
 
 	@IBOutlet weak var studentNamesLabel: UILabel!
+	@IBOutlet weak var studentSearchLabel: UILabel!
+	@IBOutlet weak var searchStudentTextField: UITextField!
 	@IBOutlet weak var studentNameTextField: UITextField!
+
 	var students: [String] = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		studentNamesLabel.text = ""
+		studentSearchLabel.text = ""
 		studentNamesLabel.frame = CGRect(
 			x: 20,
 			y: 70,
 			width: view.frame.width - 40,
 			height: studentNamesLabel.frame.height * 3)
+	}
+
+	@IBAction func searchButtonTapped(_ sender: Any) {
+		guard let studentName = searchStudentTextField.text,
+			studentName != "",
+			students.contains(studentName)
+		else {
+			studentSearchLabel.text = "Student not found!"
+			return
+		}
+
+		studentSearchLabel.text = "\(studentName) exists!"
+		searchStudentTextField.text = ""
 	}
 
 	@IBAction func submitButtonTapped(_ sender: Any) {
